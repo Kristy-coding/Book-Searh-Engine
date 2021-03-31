@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -18,7 +19,7 @@ const SearchBooks = () => {
   const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
-  [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
@@ -85,12 +86,13 @@ const SearchBooks = () => {
     //   console.error(err);
     // }
 
+    
       try {
         const { data } = await saveBook({
-          variables: { bookToSave }
+          variables: { bookData: {...bookToSave} }
         });
-        console.log(data);
-        setSavedBookIds([...savedBookIds, data.saveBook.bookId])
+        console.log(bookToSave);
+        //setSavedBookIds([...savedBookIds, bookToSave.bookId])
       } catch(e){
         console.error(e);
       }
